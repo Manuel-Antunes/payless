@@ -6,7 +6,8 @@
   "author": "Manuel Antunes <manuelantun.es>",
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "workspaces": [
@@ -17,6 +18,8 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.0.1",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-okonet": "7.0.2",
@@ -44,6 +47,12 @@
   },
   "packageManager": "yarn@3.2.4",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
