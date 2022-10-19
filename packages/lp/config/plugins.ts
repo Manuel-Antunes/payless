@@ -1,5 +1,4 @@
 const plugins = [
-  `gatsby-plugin-react-helmet`,
   `gatsby-plugin-sitemap`,
   {
     resolve: `gatsby-plugin-nprogress`,
@@ -83,12 +82,6 @@ const plugins = [
       theme_color: `#1E1E1E`,
       display: `standalone`,
       icon: `src/images/icon.png`,
-    },
-  },
-  {
-    resolve: `gatsby-plugin-styled-components`,
-    options: {
-      displayName: process.env.NODE_ENV !== 'production',
     },
   },
   `gatsby-plugin-offline`, // this plugin must always be the last in the list
