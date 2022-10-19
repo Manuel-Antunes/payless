@@ -75,6 +75,7 @@ module.exports = {
     'lines-between-class-members': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    'react/react-in-jsx-scope': 0,
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
