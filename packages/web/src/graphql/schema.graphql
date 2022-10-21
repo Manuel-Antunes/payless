@@ -1,0 +1,90 @@
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+scalar DateTime
+
+scalar EmailAddress
+
+input LoginInput {
+  clientMutationId: String
+  email: EmailAddress!
+  password: String!
+}
+
+type LoginPayload {
+  clientMutationId: String
+  error: [String!]
+  token: String
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): UserEdge!
+  deleteUser(id: String!): UserEdge!
+  login(input: LoginInput!): LoginPayload
+  updateUser(id: String!, input: UpdateUserInput!): UserEdge!
+}
+
+scalar NegativeFloat
+
+scalar NegativeInt
+
+interface Node {
+  id: ID!
+}
+
+scalar NonNegativeFloat
+
+scalar NonNegativeInt
+
+scalar NonPositiveFloat
+
+scalar NonPositiveInt
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+scalar PositiveFloat
+
+scalar PositiveInt
+
+type Query {
+  me: User
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  users(first: Int, after: String, last: Int, before: String, skip: Int): UserConnection
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+}
+
+type User implements Node {
+  id: ID!
+  _id: String!
+  name: String
+  email: EmailAddress
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  startCursorOffset: Int!
+  endCursorOffset: Int!
+  count: Int!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
