@@ -76,6 +76,7 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
     'react/react-in-jsx-scope': 0,
+    'import/no-unresolved': 0,
     '@typescript-eslint/no-unused-vars': [
       'error',
       {

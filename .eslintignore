@@ -5,4 +5,5 @@ digital_assets
 flow-typed
 hard-source-cache
 public
+dist
 .eslintrc.js
