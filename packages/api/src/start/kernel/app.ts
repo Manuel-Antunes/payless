@@ -7,6 +7,9 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import logger from 'koa-logger';
 
+
+import routes from '../routes';
+
 class App {
   public app;
   public server;
@@ -14,6 +17,8 @@ class App {
   constructor() {
     this.app = new Koa();
     this.middlewares();
+    this.routes();
+    this.exceptionHandler();
     this.server = http.createServer(this.app.callback());
   }
 
@@ -22,6 +27,11 @@ class App {
     this.app.use(cors());
     this.app.use(Bodyparser());
   }
+
+  public routes() {
+    this.app.use(routes.routes());
+  }
+
   public exceptionHandler() {
     this.app.use(exceptionHandler.handle);
     this.app.on('error', (err) => {
