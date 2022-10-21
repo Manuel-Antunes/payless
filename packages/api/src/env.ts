@@ -15,7 +15,7 @@ const ENV = process.env;
 
 export const environment = {
   NODE_ENV: ENV.NODE_ENV,
-  MONGO_URI: ENV.MONGO_URI,
+  MONGO_URI: ENV.MONGO_URI || '',
   PORT: ENV.PORT || 3333,
-  JWT_SECRET: ENV.JWT_KEY,
+  JWT_SECRET: ENV.JWT_KEY || '',
 };
