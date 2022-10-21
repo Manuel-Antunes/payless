@@ -7,8 +7,11 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import logger from 'koa-logger';
 
+import exceptionHandler from '@app/exceptions/exception.handler';
 
 import routes from '../routes';
+
+import { providers } from './providers';
 
 class App {
   public app;
@@ -37,6 +40,12 @@ class App {
     this.app.on('error', (err) => {
       console.log('app error: ', err);
     });
+  }
+
+  public registerProviders() {
+    providers.forEach((provider) => {
+      provider.register(this.app);
+    })
   }
 }
 
