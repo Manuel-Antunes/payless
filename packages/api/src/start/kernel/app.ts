@@ -7,6 +7,8 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import logger from 'koa-logger';
 
+import authMiddleware from '@app/middlewares/auth.middleware';
+
 import exceptionHandler from '@app/exceptions/exception.handler';
 
 import routes from '../routes';
@@ -22,6 +24,7 @@ class App {
     this.middlewares();
     this.routes();
     this.exceptionHandler();
+    this.registerProviders();
     this.server = http.createServer(this.app.callback());
   }
 
@@ -29,6 +32,7 @@ class App {
     this.app.use(logger());
     this.app.use(cors());
     this.app.use(Bodyparser());
+    this.app.use(authMiddleware.handle)
   }
 
   public routes() {
