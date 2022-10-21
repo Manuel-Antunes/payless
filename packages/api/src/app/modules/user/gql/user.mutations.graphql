@@ -1,0 +1,17 @@
+type Mutation {
+  createUser(input: CreateUserInput!): UserEdge!
+  updateUser(id: String!, input: UpdateUserInput!): UserEdge!
+  deleteUser(id: String!): UserEdge!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+}

@@ -1,0 +1,21 @@
+type User implements Node {
+  id: ID!
+  _id: String!
+  name: String
+  email: EmailAddress
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  startCursorOffset: Int!
+  endCursorOffset: Int!
+  count: Int!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
