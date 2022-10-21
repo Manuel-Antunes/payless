@@ -1,0 +1,7 @@
+version: '3.0'
+name: payless
+services:
+  spacie_mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
