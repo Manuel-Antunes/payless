@@ -1,16 +1,26 @@
 {
   "private": true,
+  "name": "@payless/web",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/graphql/**' --schema ./src/graphql/schema.graphql",
+    "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --schema ./src/graphql/schema.graphql --language typescript",
     "schema": "graphql get-schema -e dev"
   },
   "dependencies": {
     "@payless/ui": "workspace:^",
     "next": "latest",
-    "react-relay": "^9.0.0"
+    "next-images": "^1.8.4",
+    "next-transpile-modules": "^9.1.0",
+    "patch-package": "^6.4.7",
+    "react-apexcharts": "^1.4.0",
+    "react-headless-notifier": "^0.1.6",
+    "relay-compiler-language-typescript": "^15.0.1",
+    "relay-config": "^12.0.1",
+    "relay-nextjs": "^0.10.1",
+    "relay-runtime": "^14.1.0",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
