@@ -1,8 +1,0 @@
-{
-  "name": "@payless/relay",
-  "packageManager": "yarn@3.2.4",
-  "main": "src/index.ts",
-  "dependencies": {
-    "react-relay": "^9.0.0"
-  }
-}
