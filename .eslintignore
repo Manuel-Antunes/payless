@@ -7,3 +7,4 @@ hard-source-cache
 public
 dist
 .eslintrc.js
+*.js
