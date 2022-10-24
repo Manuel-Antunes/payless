@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "noImplicitAny": true,
     "target": "es2017",
     "module": "commonjs",
@@ -7,9 +8,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./"
   },
-  "include": [
-    "packages/**/*"
-  ]
+  "include": ["packages/**/*"],
 }
