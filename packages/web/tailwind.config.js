@@ -5,7 +5,6 @@ const base = require('@payless/ui/tailwind.config')
 module.exports = {
   ...base,
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
 }
