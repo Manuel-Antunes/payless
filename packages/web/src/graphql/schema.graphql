@@ -9,15 +9,14 @@ scalar DateTime
 scalar EmailAddress
 
 input LoginInput {
-  clientMutationId: String
   email: EmailAddress!
   password: String!
 }
 
 type LoginPayload {
-  clientMutationId: String
-  error: [String!]
-  token: String
+  id: ID!
+  token: String!
+  user: User!
 }
 
 type Mutation {
