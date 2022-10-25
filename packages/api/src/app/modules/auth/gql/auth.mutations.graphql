@@ -3,13 +3,12 @@ type Mutation {
 }
 
 type LoginPayload {
-  clientMutationId: String
-  error: [String!]
-  token: String
+  id: ID!
+  token: String!
+  user: User!
 }
 
 input LoginInput {
-  clientMutationId: String
   email: EmailAddress!
   password: String!
 }

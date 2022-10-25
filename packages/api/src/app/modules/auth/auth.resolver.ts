@@ -8,6 +8,8 @@ import { Secret, sign, SignOptions } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 
+import { load as loadUser } from '../user/user.loader';
+
 import { UserModel } from '../user/user.model';
 
 const signAsync = promisify<
@@ -19,24 +21,18 @@ const signAsync = promisify<
 
 const resolvers: GQLResolvers = {
   Mutation: {
-    login: async (_parent, args) => {
+    login: async (_parent, args, ctx) => {
       try {
         const { input } = args;
         const user = await UserModel.findOne({
           email: input.email,
         });
         if (!user) {
-          return {
-            clientMutationId: input.clientMutationId,
-            error: ['invalid email or password'],
-          };
+          throw new createError.Unauthorized('Invalid credentials');
         }
         const valid = await compare(input.password, user.password);
         if (!valid) {
-          return {
-            clientMutationId: input.clientMutationId,
-            error: ['invalid email or password'],
-          };
+          throw new createError.Unauthorized('Invalid credentials');
         }
         const token = await signAsync(
           { userId: user._id + '' },
@@ -45,9 +41,11 @@ const resolvers: GQLResolvers = {
             expiresIn: '7d',
           },
         );
+        const loadedUser = await loadUser(ctx, user._id)
         return {
-          clientMutationId: input.clientMutationId,
+          id: loadedUser?.id,
           token,
+          user: loadedUser,
         };
       } catch (err) {
         throw createError(401, (err as Error).message);
