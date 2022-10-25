@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export interface IUser extends Document {
   name: string;
@@ -10,4 +10,5 @@ export interface IUser extends Document {
   encryptPassword: (password: string | undefined) => string;
   createdAt: Date;
   updatedAt: Date;
+  contacts: Types.ObjectId[] | IUser[];
 }

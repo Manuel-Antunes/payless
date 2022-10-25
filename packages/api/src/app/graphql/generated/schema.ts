@@ -42,24 +42,30 @@ export type GQLCreateUserInput = {
 
 
 export type GQLLoginInput = {
-  clientMutationId?: Maybe<Scalars['String']>;
   email: Scalars['EmailAddress'];
   password: Scalars['String'];
 };
 
 export type GQLLoginPayload = {
   __typename?: 'LoginPayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  error?: Maybe<Array<Scalars['String']>>;
-  token?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  token: Scalars['String'];
+  user: GQLUser;
 };
 
 export type GQLMutation = {
   __typename?: 'Mutation';
+  addContact: GQLUserEdge;
   createUser: GQLUserEdge;
   deleteUser: GQLUserEdge;
   login?: Maybe<GQLLoginPayload>;
+  removeContact: GQLUserEdge;
   updateUser: GQLUserEdge;
+};
+
+
+export type GQLMutationAddContactArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -75,6 +81,11 @@ export type GQLMutationDeleteUserArgs = {
 
 export type GQLMutationLoginArgs = {
   input: GQLLoginInput;
+};
+
+
+export type GQLMutationRemoveContactArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -144,6 +155,7 @@ export type GQLUser = GQLNode & {
   email?: Maybe<Scalars['EmailAddress']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  contacts?: Maybe<GQLUserConnection>;
 };
 
 export type GQLUserConnection = {
@@ -244,12 +256,12 @@ export type GQLResolversTypes = {
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']>;
   LoginInput: GQLLoginInput;
-  LoginPayload: ResolverTypeWrapper<GQLLoginPayload>;
+  LoginPayload: ResolverTypeWrapper<Omit<GQLLoginPayload, 'user'> & { user: GQLResolversTypes['User'] }>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   NegativeFloat: ResolverTypeWrapper<Scalars['NegativeFloat']>;
   NegativeInt: ResolverTypeWrapper<Scalars['NegativeInt']>;
   Node: GQLResolversTypes['User'];
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   NonNegativeFloat: ResolverTypeWrapper<Scalars['NonNegativeFloat']>;
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']>;
   NonPositiveFloat: ResolverTypeWrapper<Scalars['NonPositiveFloat']>;
@@ -273,12 +285,12 @@ export type GQLResolversParentTypes = {
   DateTime: Scalars['DateTime'];
   EmailAddress: Scalars['EmailAddress'];
   LoginInput: GQLLoginInput;
-  LoginPayload: GQLLoginPayload;
+  LoginPayload: Omit<GQLLoginPayload, 'user'> & { user: GQLResolversParentTypes['User'] };
+  ID: Scalars['ID'];
   Mutation: {};
   NegativeFloat: Scalars['NegativeFloat'];
   NegativeInt: Scalars['NegativeInt'];
   Node: GQLResolversParentTypes['User'];
-  ID: Scalars['ID'];
   NonNegativeFloat: Scalars['NonNegativeFloat'];
   NonNegativeInt: Scalars['NonNegativeInt'];
   NonPositiveFloat: Scalars['NonPositiveFloat'];
@@ -304,16 +316,18 @@ export interface GQLEmailAddressScalarConfig extends GraphQLScalarTypeConfig<GQL
 }
 
 export type GQLLoginPayloadResolvers<ContextType = GraphQLContext, ParentType extends GQLResolversParentTypes['LoginPayload'] = GQLResolversParentTypes['LoginPayload']> = {
-  clientMutationId?: Resolver<Maybe<GQLResolversTypes['String']>, ParentType, ContextType>;
-  error?: Resolver<Maybe<Array<GQLResolversTypes['String']>>, ParentType, ContextType>;
-  token?: Resolver<Maybe<GQLResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<GQLResolversTypes['ID'], ParentType, ContextType>;
+  token?: Resolver<GQLResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<GQLResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type GQLMutationResolvers<ContextType = GraphQLContext, ParentType extends GQLResolversParentTypes['Mutation'] = GQLResolversParentTypes['Mutation']> = {
+  addContact?: Resolver<GQLResolversTypes['UserEdge'], ParentType, ContextType, RequireFields<GQLMutationAddContactArgs, 'id'>>;
   createUser?: Resolver<GQLResolversTypes['UserEdge'], ParentType, ContextType, RequireFields<GQLMutationCreateUserArgs, 'input'>>;
   deleteUser?: Resolver<GQLResolversTypes['UserEdge'], ParentType, ContextType, RequireFields<GQLMutationDeleteUserArgs, 'id'>>;
   login?: Resolver<Maybe<GQLResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<GQLMutationLoginArgs, 'input'>>;
+  removeContact?: Resolver<GQLResolversTypes['UserEdge'], ParentType, ContextType, RequireFields<GQLMutationRemoveContactArgs, 'id'>>;
   updateUser?: Resolver<GQLResolversTypes['UserEdge'], ParentType, ContextType, RequireFields<GQLMutationUpdateUserArgs, 'id' | 'input'>>;
 };
 
@@ -376,6 +390,7 @@ export type GQLUserResolvers<ContextType = GraphQLContext, ParentType extends GQ
   email?: Resolver<Maybe<GQLResolversTypes['EmailAddress']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<GQLResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<GQLResolversTypes['DateTime']>, ParentType, ContextType>;
+  contacts?: Resolver<Maybe<GQLResolversTypes['UserConnection']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -438,7 +453,6 @@ export function GQLCreateUserInputSchema(): z.ZodObject<Properties<GQLCreateUser
 
 export function GQLLoginInputSchema(): z.ZodObject<Properties<GQLLoginInput>> {
   return z.object({
-    clientMutationId: z.string().nullish(),
     email: z.string().email(),
     password: z.string()
   })

@@ -1,6 +1,8 @@
 type Mutation {
   createUser(input: CreateUserInput!): UserEdge!
   updateUser(id: String!, input: UpdateUserInput!): UserEdge!
+  addContact(id: String!): UserEdge!
+  removeContact(id: String!): UserEdge!
   deleteUser(id: String!): UserEdge!
 }
 

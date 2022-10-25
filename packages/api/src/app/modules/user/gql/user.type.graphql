@@ -5,6 +5,7 @@ type User implements Node {
   email: EmailAddress
   createdAt: DateTime
   updatedAt: DateTime
+  contacts: UserConnection
 }
 
 type UserConnection {

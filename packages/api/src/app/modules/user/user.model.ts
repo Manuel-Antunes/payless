@@ -18,6 +18,12 @@ export const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       hidden: true,
     },
+    contacts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: {
