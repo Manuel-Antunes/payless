@@ -20,8 +20,6 @@ module.exports = {
 
     return config;
   },
-  ...withTM({
-    esModule: true,
-  }),
+  ...withTM({}),
   ...withImages(),
 };
