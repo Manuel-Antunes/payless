@@ -46,3 +46,7 @@ generates:
   ../web/src/graphql/schema.graphql:
     plugins:
       - schema-ast
+  ../web/src/graphql/generated/schema.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
